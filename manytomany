@@ -1,0 +1,232 @@
+create table if not exists courses
+(
+    id   uuid primary key default gen_random_uuid() not null,
+    name varchar                                    not null
+);
+
+
+create table if not exists students
+(
+    id            uuid primary key default gen_random_uuid() not null,
+    name          varchar not null,
+    age           int not null,
+    course        varchar not null
+);
+
+
+create table if not exists grades
+(
+    id          uuid primary key default gen_random_uuid() not null,
+    grade       int,
+    student_course_id uuid not null, 
+    FOREIGN KEY (student_course_id) REFERENCES students_courses(id)
+);
+
+create table if not exists students_courses
+(
+    id          uuid primary key default gen_random_uuid() not null,
+    student_id  uuid not null,
+    course_id   uuid not null,
+    FOREIGN KEY (student_id) REFERENCES students(id),
+    FOREIGN KEY (course_id) REFERENCES courses(id)
+);
+
+insert into courses(name) values
+('Golang'),
+('Dizayner'),
+('Dotnet'),
+('Python'),
+('Marketing'),
+('English for IT'),
+('Java');
+
+
+select*from courses;
+                  id                  |      name      
+--------------------------------------+----------------
+ 08539098-c3e7-4f00-8f35-dcc0b14778d3 | Golang
+ 572997bf-becd-412a-b33e-718db5a2f59a | Dizayner
+ cdc41050-9b28-4237-a37b-44e0effd3a5a | Dotnet
+ 4e5dc046-33a6-4543-9c2f-27cc4ffa1d14 | Python
+ 92e806c5-becf-416c-a366-2b711688cb3e | Marketing
+ 13dda078-0066-4769-a6c9-be1b306da694 | English for IT
+ 691906c9-3a6b-4530-bd90-ac15cf293833 | Java
+(7 rows)
+
+
+
+insert into students(name, age, course) values
+('Davron', 19,'Dizayner'),
+('Doston', 20,'Dotnet'),
+('Farruh', 20,'Python'),
+('Charos', 17,'Golang'),
+('Maftuna', 21,'Java'),
+('Azizbek', 23,'Marketing'),
+('Samiya', 24, 'English for IT'),
+('Sardor', 23,'English for IT'),
+('Bobur', 21,'Java'),
+('Bahrom', 21,'Dizayner'),
+('Sabina', 21,'English for IT'),
+('Nasiba', 18,'Python'),
+('Murod', 19,'Marketing'),
+('Sohiba', 21,'English for IT'),
+('Nazokat', 17,'Python'),
+('Mirodil', 19,'Marketing');
+
+select*from students;
+                  id                  |  name   | age |     course     
+--------------------------------------+---------+-----+----------------
+ 9b8505f7-44ee-4f42-b2d1-41f53b5055e5 | Davron  |  19 | Dizayner
+ 54fd77c6-1188-43d0-8383-3e9999394c0c | Doston  |  20 | Dotnet
+ 21e5d056-addd-49ed-b094-d3955ba7ea95 | Farruh  |  20 | Python
+ 73a8937c-b4f2-409c-a26f-cf890ddab74d | Charos  |  17 | Golang
+ 8f467c73-f861-4726-bbfb-b3b28838ad81 | Maftuna |  21 | Java
+ 90045371-86ff-4f30-8913-64d3cabd9cf1 | Azizbek |  23 | Marketing
+ 4748245a-9b7a-4e43-bbee-7732119b0753 | Samiya  |  24 | English for IT
+ 4f348f63-e6b7-4577-8155-07df8ce6714b | Sardor  |  23 | English for IT
+ 61b9ed52-70b8-4e37-b388-4fb66711c8c6 | Bobur   |  21 | Java
+ 3b9d2ba6-9f29-4d03-87c7-11e004a0a147 | Bahrom  |  21 | Dizayner
+ 1668d60d-d3e4-4203-b182-0c09aa9be538 | Sabina  |  21 | English for IT
+ 3ca31d70-d06d-464f-a8e2-c6bed846791c | Nasiba  |  18 | Python
+ 743c1757-6100-472f-a2dd-881e8512c315 | Murod   |  19 | Marketing
+ 713726b6-f256-47b4-9e7c-4d380b6c10c8 | Sohiba  |  21 | English for IT
+ f7fe430e-1afd-4dca-adf7-ead393d1981a | Nazokat |  17 | Python
+ 16ea158a-1531-48ef-9a42-eec58b306c83 | Mirodil |  19 | Marketing
+(16 rows)
+
+
+
+INSERT INTO students_courses (student_id, course_id) VALUES
+('9b8505f7-44ee-4f42-b2d1-41f53b5055e5','572997bf-becd-412a-b33e-718db5a2f59a'),
+('54fd77c6-1188-43d0-8383-3e9999394c0c','cdc41050-9b28-4237-a37b-44e0effd3a5a'),
+('21e5d056-addd-49ed-b094-d3955ba7ea95','4e5dc046-33a6-4543-9c2f-27cc4ffa1d14'),
+('73a8937c-b4f2-409c-a26f-cf890ddab74d','08539098-c3e7-4f00-8f35-dcc0b14778d3'),
+('8f467c73-f861-4726-bbfb-b3b28838ad81','691906c9-3a6b-4530-bd90-ac15cf293833'),
+('90045371-86ff-4f30-8913-64d3cabd9cf1','92e806c5-becf-416c-a366-2b711688cb3e'),
+('4748245a-9b7a-4e43-bbee-7732119b0753','13dda078-0066-4769-a6c9-be1b306da694'),
+('4f348f63-e6b7-4577-8155-07df8ce6714b','13dda078-0066-4769-a6c9-be1b306da694'),
+('61b9ed52-70b8-4e37-b388-4fb66711c8c6','691906c9-3a6b-4530-bd90-ac15cf293833'),
+('3b9d2ba6-9f29-4d03-87c7-11e004a0a147','572997bf-becd-412a-b33e-718db5a2f59a'),
+('1668d60d-d3e4-4203-b182-0c09aa9be538','13dda078-0066-4769-a6c9-be1b306da694'),
+('3ca31d70-d06d-464f-a8e2-c6bed846791c','4e5dc046-33a6-4543-9c2f-27cc4ffa1d14'),
+('743c1757-6100-472f-a2dd-881e8512c315','92e806c5-becf-416c-a366-2b711688cb3e'),
+('713726b6-f256-47b4-9e7c-4d380b6c10c8','13dda078-0066-4769-a6c9-be1b306da694'),
+('f7fe430e-1afd-4dca-adf7-ead393d1981a','4e5dc046-33a6-4543-9c2f-27cc4ffa1d14'),
+('16ea158a-1531-48ef-9a42-eec58b306c83','92e806c5-becf-416c-a366-2b711688cb3e');
+
+
+select*from students_courses;
+
+                id                  |              student_id              |              course_id               
+--------------------------------------+--------------------------------------+--------------------------------------
+ d58e8e3f-c74f-4614-a89e-f5b7c149d4aa | 9b8505f7-44ee-4f42-b2d1-41f53b5055e5 | 572997bf-becd-412a-b33e-718db5a2f59a
+ 7ce6c796-f788-4e49-9f15-0bf4873184f9 | 54fd77c6-1188-43d0-8383-3e9999394c0c | cdc41050-9b28-4237-a37b-44e0effd3a5a
+ b81fff3e-372c-4444-b095-fe58b6da898c | 21e5d056-addd-49ed-b094-d3955ba7ea95 | 4e5dc046-33a6-4543-9c2f-27cc4ffa1d14
+ 0629890a-072b-4677-ac23-5f2a997ae9d1 | 73a8937c-b4f2-409c-a26f-cf890ddab74d | 08539098-c3e7-4f00-8f35-dcc0b14778d3
+ 57718cc9-02ee-4dd1-8b5e-8a80af6e36e7 | 8f467c73-f861-4726-bbfb-b3b28838ad81 | 691906c9-3a6b-4530-bd90-ac15cf293833
+ 195653a3-7636-42ab-b0d7-356b9150d212 | 90045371-86ff-4f30-8913-64d3cabd9cf1 | 92e806c5-becf-416c-a366-2b711688cb3e
+ bc0e4467-77c5-48d2-822c-8e46c12b4d06 | 4748245a-9b7a-4e43-bbee-7732119b0753 | 13dda078-0066-4769-a6c9-be1b306da694
+ 7cb9e7a1-e412-41d5-9b58-6f2e9bcfeb4f | 4f348f63-e6b7-4577-8155-07df8ce6714b | 13dda078-0066-4769-a6c9-be1b306da694
+ 369f18be-d607-4a53-954a-1f9bb81c8306 | 61b9ed52-70b8-4e37-b388-4fb66711c8c6 | 691906c9-3a6b-4530-bd90-ac15cf293833
+ 5d171d76-9f35-4c55-9a31-0f708d80183a | 3b9d2ba6-9f29-4d03-87c7-11e004a0a147 | 572997bf-becd-412a-b33e-718db5a2f59a
+ c8d6ae18-fccb-4d1b-9c7f-44b2a3cbda1f | 1668d60d-d3e4-4203-b182-0c09aa9be538 | 13dda078-0066-4769-a6c9-be1b306da694
+ 063fd263-9b41-4b08-b942-8e400499e7ce | 3ca31d70-d06d-464f-a8e2-c6bed846791c | 4e5dc046-33a6-4543-9c2f-27cc4ffa1d14
+ 7661780f-2913-461f-b35b-f1d5e4eccca6 | 743c1757-6100-472f-a2dd-881e8512c315 | 92e806c5-becf-416c-a366-2b711688cb3e
+ 4d556290-6d94-441c-8c36-c95b84bb23b7 | 713726b6-f256-47b4-9e7c-4d380b6c10c8 | 13dda078-0066-4769-a6c9-be1b306da694
+ 9f480321-c37b-4a7b-b264-c7e1f1eae657 | f7fe430e-1afd-4dca-adf7-ead393d1981a | 4e5dc046-33a6-4543-9c2f-27cc4ffa1d14
+ a5a92797-fe88-4d4d-96b6-73d8b4909650 | 16ea158a-1531-48ef-9a42-eec58b306c83 | 92e806c5-becf-416c-a366-2b711688cb3e
+(16 rows)
+
+
+
+
+INSERT INTO grades (grade, student_course_id) VALUES
+(85,'d58e8e3f-c74f-4614-a89e-f5b7c149d4aa'),
+(89,'7ce6c796-f788-4e49-9f15-0bf4873184f9'),
+(92,'b81fff3e-372c-4444-b095-fe58b6da898c'),
+(95,'0629890a-072b-4677-ac23-5f2a997ae9d1'),
+(78,'57718cc9-02ee-4dd1-8b5e-8a80af6e36e7'),
+(100,'195653a3-7636-42ab-b0d7-356b9150d212'),
+(99,'bc0e4467-77c5-48d2-822c-8e46c12b4d06'),
+(77,'7cb9e7a1-e412-41d5-9b58-6f2e9bcfeb4f'),
+(75,'369f18be-d607-4a53-954a-1f9bb81c8306'),
+(80,'5d171d76-9f35-4c55-9a31-0f708d80183a'),
+(73,'c8d6ae18-fccb-4d1b-9c7f-44b2a3cbda1f'),
+(84,'063fd263-9b41-4b08-b942-8e400499e7ce'),
+(90,'7661780f-2913-461f-b35b-f1d5e4eccca6'),
+(100,'4d556290-6d94-441c-8c36-c95b84bb23b7'),
+(92,'9f480321-c37b-4a7b-b264-c7e1f1eae657'),
+(88,'a5a92797-fe88-4d4d-96b6-73d8b4909650');
+
+
+select*from grades;
+
+
+                  id                  | grade |          student_course_id           
+--------------------------------------+-------+--------------------------------------
+ cb49ca37-1a0d-4587-b16d-5b60e2794168 |    85 | d58e8e3f-c74f-4614-a89e-f5b7c149d4aa
+ 8c8e7062-5dae-4f61-9ea1-7d157e004f11 |    89 | 7ce6c796-f788-4e49-9f15-0bf4873184f9
+ 9f45985a-df34-4b9b-b6cf-59b7355df19c |    92 | b81fff3e-372c-4444-b095-fe58b6da898c
+ 1cc3f516-06ad-412f-8497-739e8f61aad3 |    95 | 0629890a-072b-4677-ac23-5f2a997ae9d1
+ 808daffe-7e80-41b0-9c4a-51762fede9ed |    78 | 57718cc9-02ee-4dd1-8b5e-8a80af6e36e7
+ 413d68ca-994a-4004-94de-a0f8332dfc1d |   100 | 195653a3-7636-42ab-b0d7-356b9150d212
+ 7d2d0482-3135-426f-b123-e7dbe28f2b3e |    99 | bc0e4467-77c5-48d2-822c-8e46c12b4d06
+ 4cf0a49c-619a-435c-b5b3-0607c7774e87 |    77 | 7cb9e7a1-e412-41d5-9b58-6f2e9bcfeb4f
+ 4d61367c-afd8-492c-9f36-89c89084a6e2 |    75 | 369f18be-d607-4a53-954a-1f9bb81c8306
+ 9a7945a2-0350-44e5-8ba7-df748f43e6c8 |    80 | 5d171d76-9f35-4c55-9a31-0f708d80183a
+ 9ae88cca-9ff2-4dc6-86f1-68544cf0a845 |    73 | c8d6ae18-fccb-4d1b-9c7f-44b2a3cbda1f
+ 991bc1b3-4fa3-41bf-90bb-f93b40190235 |    84 | 063fd263-9b41-4b08-b942-8e400499e7ce
+ f285d30f-88e8-4a74-a1f9-16ddb5d81f75 |    90 | 7661780f-2913-461f-b35b-f1d5e4eccca6
+ cef5f593-5e77-4c1d-a0e2-264b04d59c5f |   100 | 4d556290-6d94-441c-8c36-c95b84bb23b7
+ 71c6f958-fb0a-434b-8a03-04b6ce14ed7b |    92 | 9f480321-c37b-4a7b-b264-c7e1f1eae657
+ b3479a79-d61f-4439-930d-975a958a64ed |    88 | a5a92797-fe88-4d4d-96b6-73d8b4909650
+(16 rows)
+
+
+
+
+-- 3. Guruhning o'rtacha bahosini har bir guruh bo'yicha chiqaring
+SELECT s.course, AVG(g.grade) AS avg_grade
+FROM students s
+JOIN students_courses sc ON s.id = sc.student_id
+JOIN grades g ON sc.id = g.student_course_id
+GROUP BY s.course
+ORDER BY avg_grade DESC;
+
+
+-- 4. Eng yosh o'quvchi guruh bo'yicha chiqarilsin
+-- Yani, agar bir guruhdan eng yosh o'quvchi bir nechta bo'lsa, har birini chiqarish
+SELECT s.name, s.age, s.course
+FROM students s
+ORDER BY s.age ASC
+LIMIT 1 PER GROUP BY s.course;
+
+-- 5. Eng yaxshi o'qiydigan guruh chiqarilsin
+-- Ya'ni, har bir guruhning o'rtacha bahosining eng katta(yaxshi) bo'lgani
+SELECT s.course, AVG(g.grade) AS avg_grade
+FROM students s
+JOIN students_courses sc ON s.id = sc.students_id
+JOIN grades g ON sc.id = g.students_courses_id
+GROUP BY s.course
+ORDER BY avg_grade DESC
+LIMIT 1;
+
+
+-- 1. Grade table dagi student_id va course_id o'rniga student_course tabledagi idni olishimiz darkor
+SELECT c.name AS course, AVG(g.grade) AS avg_grade
+FROM courses c
+JOIN students_courses sc ON c.id = sc.course_id
+JOIN grades g ON sc.id = g.student_course_id
+GROUP BY c.name
+ORDER BY avg_grade DESC
+LIMIT 1;
+
+
+-- 2. Guruhdagi eng yaxshi o'qiydigan studentlarni har guruh bo'yicha chiqaring. 
+-- Agar eng yaxshi baholar bir nechta kishida bo'lsa, hammasi chiqsin.
+SELECT s.name, s.course, MAX(g.grade) AS max_grade
+FROM students s
+JOIN students_courses sc ON s.id = sc.student_id
+JOIN grades g ON sc.id = g.student_course_id
+GROUP BY s.name, s.course
+ORDER BY max_grade DESC;
